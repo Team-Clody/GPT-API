@@ -19,12 +19,8 @@ public class ChatService {
     @Cacheable("chatResponses")
     public String getChatResponse(String prompt) {
         try {
-
-            return chatgptService.sendMessage(prompt);
-        } catch (HttpClientErrorException.TooManyRequests e) {
-
-            log.error("Too many requests error: {}", e.getMessage());
-            return ErrorMessage.TOO_MANY_REQUEST.getMessage();
+            String message = prompt + " 오늘 있었던 일에 대해서 칭찬을 해줘.";
+            return chatgptService.sendMessage(message);
         } catch (HttpClientErrorException.BadRequest e) {
 
             log.error("Bad request error: {}", e.getMessage());
