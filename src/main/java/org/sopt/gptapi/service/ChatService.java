@@ -15,17 +15,17 @@ public class ChatService {
     @Cacheable("chatResponses")
     public String getChatResponse(String prompt) {
         try {
-            // ChatGPT 에게 질문을 던집니다.
+
             return chatgptService.sendMessage(prompt);
         } catch (HttpClientErrorException.TooManyRequests e) {
-            // 쿼터 초과 시 처리
-            return "현재 요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.";
+
+            return "The request rate is too high. Please try again later.";
         } catch (HttpClientErrorException.BadRequest e) {
-            // 잘못된 요청 처리
-            return "잘못된 요청입니다. 엔드포인트를 확인해 주세요.";
+
+            return "Bad request. Please check the endpoint.";
         } catch (Exception e) {
-            // 기타 예외 처리
-            return "오류가 발생했습니다. 다시 시도해 주세요.";
+
+            return "An error occurred. Please try again.";
         }
     }
 
