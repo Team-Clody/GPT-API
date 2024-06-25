@@ -1,9 +1,0 @@
-spring:
-  cache:
-    type: simple
-  application:
-    name: ChatGPT-API
-
-chatgpt:
-  api-key: sk-proj-1E602SR9h2hInk8Am7RXT3BlbkFJ6woJhN1VE0JQB2mdHDsL
-  model: gpt-3.5-turbo
