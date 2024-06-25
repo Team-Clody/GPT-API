@@ -24,14 +24,13 @@ public class testController {
     // 초당 1개의 요청만 허용
     private final RateLimiter rateLimiter = RateLimiter.create(1.0);
 
-    // chat-gpt와 간단한 채팅 서비스 소스
     @PostMapping("chat-gpt")
     public String test(@RequestBody String question) {
         // 요청 빈도 조절
         if (rateLimiter.tryAcquire()) {
             return chatService.getChatResponse(question);
         } else {
-            return "요청이 너무 빈번합니다. 잠시 후 다시 시도해 주세요.";
+            return "Requests are too frequent. Please try again later.";
         }
     }
 }
