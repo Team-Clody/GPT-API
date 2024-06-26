@@ -6,6 +6,7 @@ import io.github.flashvayne.chatgpt.service.ChatgptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.sopt.gptapi.common.dto.ErrorMessage;
+import org.sopt.gptapi.dto.UserRequest;
 import org.sopt.gptapi.service.ChatService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,18 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class testController {
 
     private final ChatService chatService;
-    private final ChatgptService chatgptService;
 
-    // 초당 1개의 요청만 허용
-    private final RateLimiter rateLimiter = RateLimiter.create(1.0);
 
     @PostMapping("chat-gpt")
-    public String test(@RequestBody String question) {
-        // 요청 빈도 조절
-        if (rateLimiter.tryAcquire()) {
-            return chatService.getChatResponse(question);
-        } else {
-            return ErrorMessage.TOO_MANY_REQUEST.getMessage();
+    public String handleChatRequest(
+        @RequestBody UserRequest userRequest
+    ) {
+        String content = userRequest.getContent();
+        try {
+            return chatService.getChatResponse(content);
+        }catch (Exception e){
+            log.error("Error during processing: {}",e.getMessage());
+            return "An error has occurred. Please try again.";
         }
+
+
     }
 }
