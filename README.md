@@ -3,3 +3,4 @@
 
 * Feat/#1 => 영어로 번역한 후 gpt에 되묻기 (성능 확인)
 * Feat/#2 => Few shot skill을 이용해서 gpt에 요청할 때 칭찬의 예시도 함께 보낸다.
+* Feat/#3 => WebClient 방식으로 외부 api 사용하기
