@@ -5,11 +5,6 @@ import org.sopt.gptapi.common.dto.ErrorMessage;
 import org.sopt.gptapi.common.dto.Prompt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-
-import lombok.RequiredArgsConstructor;
-import org.sopt.gptapi.common.dto.ErrorMessage;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
