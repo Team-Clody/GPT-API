@@ -43,6 +43,10 @@ dependencies {
     implementation 'io.projectreactor.netty:reactor-netty'
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 
+    //욕설 필터링
+    implementation 'io.github.vaneproject:badwordfiltering:1.0.0'
+
+
 }
 
 
