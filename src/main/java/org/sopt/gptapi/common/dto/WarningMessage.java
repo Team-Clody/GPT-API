@@ -8,9 +8,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum WarningMessage {
 
-    WARNING_MESSAGE("안녕하세요! 저는 감사일기에 대해 칭찬을 해드리는 클로디입니다. " +
-            "사용해주셔서 감사합니다. 다만, 부적절한 언어가 감지되었습니다. " +
-            "긍정적인 표현으로 감사일기를 작성해주시면 더 나은 피드백을 드릴 수 있습니다. 감사합니다!")
+    WARNING_MESSAGE("안녕! 이번 일기에 조금 부적절한 표현이 들어간 것 같아. "
+        + "앞으로는 감사한 마음을 잘 담아서 일기를 써주면 내가 더 좋은 답변을 줄 수 있을 거야. "
+        + "내일은 긍정적인 생각으로 하루를 시작할 수 있도록 네잎클로버🍀하나를 줄게, "
+        + "또 언제든 나를 찾아줘! ")
     ;
 
     private final String message;
