@@ -25,7 +25,7 @@ public class ChatService {
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatService.class);
+    public static final Logger logger = LoggerFactory.getLogger(ChatService.class);
 
     public Mono<String> getChatResponse(String content, Long userId, String createdDate) {
         boolean containsBadWords = filtering.check(content);

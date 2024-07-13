@@ -1,14 +1,10 @@
 package org.sopt.gptapi;
 
-import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider;
-import io.netty.resolver.dns.DnsNameResolverBuilder;
-
-
-import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 public class GptApiApplication {
 
