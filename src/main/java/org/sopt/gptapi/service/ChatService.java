@@ -1,12 +1,16 @@
 package org.sopt.gptapi.service;
 
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sopt.gptapi.common.dto.ErrorMessage;
 
+import org.sopt.gptapi.domain.reply.Reply;
+import org.sopt.gptapi.domain.user.User;
 import org.sopt.gptapi.dto.Prompt;
 import org.sopt.gptapi.service.reply.ReplyService;
+import org.sopt.gptapi.service.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.reactive.function.client.WebClientResponseException.BadRequest;
@@ -19,9 +23,10 @@ public class ChatService {
   public static final Logger logger = LoggerFactory.getLogger(ChatService.class);
   private final AsyncChatgptService asyncChatgptService;
   private final ReplyService replyService;
+  private final UserService userService;
 
   public Mono<String> getChatResponse(String content, Long userId, String createdDate) {
-    String message = "Prompt message: " + content + "\n칭찬 :";
+    String message = Prompt.MESSAGE.getMessage() + content + "\n칭찬 :";
     return asyncChatgptService.sendMessage(message)
         .flatMap(response -> {
           logger.info("ChatGPT response: {}", response);
