@@ -26,11 +26,14 @@ public class RedisConfig {
 
   private final String EXPIRED_EVENT_PATTERN = "__keyevent@0__:expired";
 
-  private final ObjectMapper objectMapper;
   @Value("${spring.data.redis.host}")
   private String host;
   @Value("${spring.data.redis.port}")
   private int port;
+
+  private final Executor commonTaskExecutor;
+  private final ObjectMapper objectMapper;
+
 
   @Bean
   public RedisConnectionFactory redisConnectionFactory() {
@@ -40,19 +43,19 @@ public class RedisConfig {
   @Bean(name = "redisMessageTaskExecutor")
   public Executor redisMessageTaskExecutor() {
     ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-    threadPoolTaskExecutor.setCorePoolSize(2);
-    threadPoolTaskExecutor.setMaxPoolSize(4);
+    threadPoolTaskExecutor.setCorePoolSize(1);
+    threadPoolTaskExecutor.setMaxPoolSize(1);
     return threadPoolTaskExecutor;
   }
 
   @Bean
   public RedisMessageListenerContainer redisMessageListenerContainer(
       RedisConnectionFactory redisConnectionFactory,
-      MessageListenerAdapter listenerAdapter) {
+      MessageListenerAdapter listenerAdapter, Executor commonTaskExecutor) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();
     container.setConnectionFactory(redisConnectionFactory);
     container.addMessageListener(listenerAdapter, new PatternTopic(EXPIRED_EVENT_PATTERN));
-    container.setTaskExecutor(redisMessageTaskExecutor());
+    container.setTaskExecutor(commonTaskExecutor);
     return container;
   }
 
