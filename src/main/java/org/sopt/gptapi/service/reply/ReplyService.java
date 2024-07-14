@@ -18,7 +18,7 @@ public class ReplyService {
   public Mono<String> saveReply(String content, Long userId, String createdDate) {
     return userService.getUserById(userId)
         .flatMap(user -> {
-          Reply reply = Reply.createDiary(content, false, LocalDateTime.parse(createdDate), user);
+          Reply reply = Reply.createDiary(content, false, LocalDateTime.parse(createdDate), user.getId());
           return replyRepository.save(reply)
               .thenReturn(content);
         });
