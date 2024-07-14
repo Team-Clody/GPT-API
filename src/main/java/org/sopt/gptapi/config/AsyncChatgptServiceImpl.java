@@ -10,9 +10,12 @@ import io.github.flashvayne.chatgpt.dto.image.ImageRequest;
 import io.github.flashvayne.chatgpt.dto.image.ImageResponse;
 import io.github.flashvayne.chatgpt.dto.image.ImageSize;
 import io.github.flashvayne.chatgpt.property.ChatgptProperties;
-import org.sopt.gptapi.service.AsyncChatgptService;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sopt.gptapi.service.AsyncChatgptService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -20,13 +23,10 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class AsyncChatgptServiceImpl implements AsyncChatgptService {
     private static final Logger log = LoggerFactory.getLogger(AsyncChatgptServiceImpl.class);
-    protected final ChatgptProperties chatgptProperties;
+    private final ChatgptProperties chatgptProperties;
     private final WebClient webClient;
 
     public AsyncChatgptServiceImpl(ChatgptProperties chatgptProperties) {

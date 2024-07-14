@@ -9,9 +9,8 @@ import io.github.flashvayne.chatgpt.dto.image.ImageFormat;
 import io.github.flashvayne.chatgpt.dto.image.ImageRequest;
 import io.github.flashvayne.chatgpt.dto.image.ImageResponse;
 import io.github.flashvayne.chatgpt.dto.image.ImageSize;
-import reactor.core.publisher.Mono;
-
 import java.util.List;
+import reactor.core.publisher.Mono;
 
 public interface AsyncChatgptService {
     Mono<String> sendMessage(String message);

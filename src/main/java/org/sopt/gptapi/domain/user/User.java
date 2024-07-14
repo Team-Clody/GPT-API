@@ -1,11 +1,16 @@
 package org.sopt.gptapi.domain.user;
 
 
+import static jakarta.persistence.GenerationType.IDENTITY;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,9 +19,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    private String platformID;
 
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
+
+    @Column(name = "email")
+    private String email;
+
+    private String nickName;
+
+    private boolean is_deleted;
+
+    @Builder
+    public User(String platformID, Platform platform, String email, String nickName, boolean is_deleted) {
+        this.platformID = platformID;
+        this.platform = platform;
+        this.email = email;
+        this.nickName = nickName;
+        this.is_deleted = is_deleted;
+    }
 }
