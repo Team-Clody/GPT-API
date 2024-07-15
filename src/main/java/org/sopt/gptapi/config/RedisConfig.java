@@ -26,9 +26,9 @@ public class RedisConfig {
 
   private final String EXPIRED_EVENT_PATTERN = "__keyevent@0__:expired";
 
-  @Value("${spring.data.redis.host}")
+  @Value("${spring.datasource.data.redis.host}")
   private String host;
-  @Value("${spring.data.redis.port}")
+  @Value("${spring.datasource.data.redis.port}")
   private int port;
 
   private final Executor commonTaskExecutor;
