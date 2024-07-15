@@ -7,6 +7,7 @@ import org.sopt.gptapi.service.ChatService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -14,16 +15,18 @@ import reactor.core.publisher.Mono;
 @RestController
 @Slf4j
 @RequestMapping("/api/v1/")
-public class testController {
+public class TestController {
 
     private final ChatService chatService;
 
     @PostMapping("chat-gpt")
     public Mono<String> handleChatRequest(
-        @RequestBody UserRequest userRequest
+        @RequestBody UserRequest userRequest,
+        @RequestParam Long userId,
+        @RequestParam String createdDate
     ) {
         String content = userRequest.getContent();
-        return chatService.getChatResponse(content)
+        return chatService.getChatResponse(content, userId, createdDate)
             .doOnError(e -> log.error("Error during processing: {}", e.getMessage()))
             .onErrorReturn("An error has occurred. Please try again.");
     }
