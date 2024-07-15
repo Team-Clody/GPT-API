@@ -1,18 +1,12 @@
 package org.sopt.gptapi.service;
 
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sopt.gptapi.common.dto.ErrorMessage;
 
-import org.sopt.gptapi.domain.reply.Reply;
-import org.sopt.gptapi.domain.user.User;
-import org.sopt.gptapi.dto.Prompt;
+import org.sopt.gptapi.config.YmlPropertyUtil;
 import org.sopt.gptapi.service.reply.ReplyService;
-import org.sopt.gptapi.service.user.UserService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.reactive.function.client.WebClientResponseException.BadRequest;
 import reactor.core.publisher.Mono;
 
@@ -23,10 +17,10 @@ public class ChatService {
   public static final Logger logger = LoggerFactory.getLogger(ChatService.class);
   private final AsyncChatgptService asyncChatgptService;
   private final ReplyService replyService;
-  private final UserService userService;
+  private final YmlPropertyUtil ymlPropertyUtil;
 
   public Mono<String> getChatResponse(String content, Long userId, String createdDate) {
-    String message = Prompt.MESSAGE.getMessage() + content + "\n칭찬 :";
+    String message = ymlPropertyUtil.getProperty("prompt")+ content + "\n칭찬 :";
     return asyncChatgptService.sendMessage(message)
         .flatMap(response -> {
           logger.info("ChatGPT response: {}", response);
@@ -43,23 +37,4 @@ public class ChatService {
         .doOnSuccess(result -> logger.info("Final result: {}", result));
   }
 
-
-//  public Mono<String> saveReply(String content, Long userId, String createdDate) {
-//    return userService.getUserById(userId)
-//        .flatMap(user -> {
-//          Reply reply = Reply.createDiary(content, false, LocalDateTime.parse(createdDate), user);
-//          return replyRepository.save(reply)
-//              .thenReturn(content);
-//        });
-//  }
-
-//  public Mono<String> saveReply(String content, Long userId, String createdDate) {
-//    return userRepository.findById(userId)
-//        .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
-//        .flatMap(user -> Mono.fromCallable(() -> {
-//          Reply reply = Reply.createDiary(content, false, LocalDateTime.parse(createdDate), user);
-//          replyRepository.save(reply);
-//          return content;
-//        }).subscribeOn(Schedulers.boundedElastic()));
-//  }
 }
