@@ -36,5 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-src/main/resources/application.yml
+src/main/resources/
 src/main/java/org/sopt/gptapi/common/dto/Prompt.java
