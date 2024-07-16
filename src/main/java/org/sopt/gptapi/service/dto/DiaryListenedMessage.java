@@ -8,6 +8,6 @@ public record DiaryListenedMessage(
     String message,
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime date
-) {
+    ) {
 
 }

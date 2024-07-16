@@ -44,6 +44,7 @@ public class RedisMessageListener implements MessageListener {
 
         CompletableFuture<String> future = chatService.getChatResponse(listenedMessage.message(), listenedMessage.userId(),
             listenedMessage.date().toString()).toFuture();
+
         future.join();
       } finally {
         redisLockService.unlock(lockKey);
