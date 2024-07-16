@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.sopt.gptapi.config.YmlPropertyUtil;
+import org.sopt.gptapi.config.PromptProperty;
 import org.sopt.gptapi.service.reply.ReplyService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException.BadRequest;
 import reactor.core.publisher.Mono;
@@ -17,10 +18,10 @@ public class ChatService {
   public static final Logger logger = LoggerFactory.getLogger(ChatService.class);
   private final AsyncChatgptService asyncChatgptService;
   private final ReplyService replyService;
-  private final YmlPropertyUtil ymlPropertyUtil;
+  private final PromptProperty promptProperty;
 
   public Mono<String> getChatResponse(String content, Long userId, String createdDate) {
-    String message = ymlPropertyUtil.getProperty("prompt")+ content + "\n칭찬 :";
+    String message = promptProperty.getPrompt() + content + "\n칭찬 :";
     return asyncChatgptService.sendMessage(message)
         .flatMap(response -> {
           logger.info("ChatGPT response: {}", response);
