@@ -46,7 +46,7 @@ dependencies {
     implementation 'org.postgresql:postgresql'
 
     // Spring Data JPA
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -59,6 +59,8 @@ dependencies {
     implementation 'org.postgresql:r2dbc-postgresql:1.0.2.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation "com.github.jasync-sql:jasync-r2dbc-mysql:2.2.0"
 }
 
 

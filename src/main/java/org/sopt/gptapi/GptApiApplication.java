@@ -13,10 +13,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
 
 @SpringBootApplication
 @EnableConfigurationProperties(PromptProperty.class)
 @AutoConfigureBefore({ DataSourceAutoConfiguration.class, SqlInitializationAutoConfiguration.class })
+@EnableR2dbcAuditing
 public class GptApiApplication {
 
     public static void main(String[] args) {
