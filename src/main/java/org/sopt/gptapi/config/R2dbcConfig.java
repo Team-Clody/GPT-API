@@ -37,8 +37,9 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
         .option(ConnectionFactoryOptions.DATABASE, "clody")
         .option(Option.valueOf("initialSize"), 10)
         .option(Option.valueOf("maxSize"), 20)
-        .option(Option.valueOf("maxIdleTime"), Duration.ofMinutes(5))
-        .option(Option.valueOf("maxLifeTime"), Duration.ofMinutes(5))
+        .option(Option.valueOf("maxIdleTime"), Duration.ofMinutes(20))
+        .option(Option.valueOf("maxLifeTime"), Duration.ofMinutes(20))
+        .option(Option.valueOf("minIdleTime"), Duration.ofSeconds(0))
         .build());
   }
 }
