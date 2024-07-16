@@ -27,6 +27,14 @@ jobs:
           cat ./application.yml
         working-directory: ${{ env.working-directory }}
 
+      - name: prompt.yml 생성
+        run: |
+          mkdir -p ./src/main/resources && cd $_
+          touch ./prompt.yml
+          echo "${{ secrets.APP_PROMPT }}" > ./prompt.yml
+          cat ./prompt.yml
+        working-directory: ${{ env.working-directory }}
+
       # Gradle 캐싱
       - name: Gradle 캐싱
         uses: actions/cache@v3
