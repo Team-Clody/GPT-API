@@ -38,29 +38,68 @@ AI 답장 기능의 성능을 높이기 위해 여러 방법으로 구현하였�
 
 ## 🖥️ Foldering
 ```
-─src
-    ├─main
-    │  ├─java
-    │  │  └─org
-    │  │      └─sopt
-    │  │          └─gptapi
-    │  │              ├─common
-    │  │              │  └─dto
-    │  │              ├─config
-    │  │              ├─controller
-    │  │              ├─domain
-    │  │              │  ├─reply
-    │  │              │  └─user
-    │  │              ├─dto
-    │  │              ├─listener
-    │  │              └─service
-    │  │                  ├─dto
-    │  │                  ├─reply
-    │  │                  └─user
-    │  └─resources
-    └─test
-        └─java
-            └─org
-                └─sopt
-                    └─gptapi
+.
+├── main
+│   ├── java
+│   │   └── org
+│   │       └── sopt
+│   │           └── gptapi
+│   │               ├── GptApiApplication.java
+│   │               ├── common
+│   │               │   └── dto
+│   │               │       ├── ErrorMessage.java
+│   │               │       └── WarningMessage.java
+│   │               ├── config
+│   │               │   ├── AsyncChatgptServiceImpl.java
+│   │               │   ├── AsyncConfig.java
+│   │               │   ├── PromptProperty.java
+│   │               │   ├── RedisConfig.java
+│   │               │   ├── ThreadPoolConfig.java
+│   │               │   └── YamlPropertySourceFactory.java
+│   │               ├── controller
+│   │               │   └── TestController.java
+│   │               ├── domain
+│   │               │   ├── reply
+│   │               │   │   ├── Reply.java
+│   │               │   │   └── ReplyRepository.java
+│   │               │   └── user
+│   │               │       ├── Platform.java
+│   │               │       ├── User.java
+│   │               │       └── UserRepository.java
+│   │               ├── dto
+│   │               │   ├── DiaryEntry.java
+│   │               │   └── UserRequest.java
+│   │               ├── listener
+│   │               │   ├── RedisLockService.java
+│   │               │   └── RedisMessageListener.java
+│   │               └── service
+│   │                   ├── AsyncChatgptService.java
+│   │                   ├── ChatService.java
+│   │                   ├── dto
+│   │                   │   └── DiaryListenedMessage.java
+│   │                   ├── reply
+│   │                   │   └── ReplyService.java
+│   │                   └── user
+│   │                       ├── UserRetriever.java
+│   │                       └── UserService.java
+│   └── resources
+│       
+│       
+│       
+│       
+└── test
+    
 ```
+
+## Teck Stack ✨
+
+| IDE | IntelliJ |
+|:---|:---|
+| Language | Java 21 |
+| Framework | Spring Boot 3.3.1, Gradle |
+| ORM | Spring R2DBC |
+| Database | PostgreSQL, Redis |
+| External | AWS EC2, AWS RDS, Nginx, Docker, Docker-Compose, FCM, Webflux |
+| CI/CD | Github Action |
+| API Docs | Notion, Swagger |
+| Other Tool | Discord, Postman, Figma |
