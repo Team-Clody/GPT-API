@@ -1,7 +1,5 @@
 package org.sopt.gptapi.config;
 
-import io.github.flashvayne.chatgpt.dto.ChatRequest;
-import io.github.flashvayne.chatgpt.dto.ChatResponse;
 import io.github.flashvayne.chatgpt.dto.chat.MultiChatMessage;
 import io.github.flashvayne.chatgpt.dto.chat.MultiChatRequest;
 import io.github.flashvayne.chatgpt.dto.chat.MultiChatResponse;
@@ -10,13 +8,9 @@ import io.github.flashvayne.chatgpt.dto.image.ImageRequest;
 import io.github.flashvayne.chatgpt.dto.image.ImageResponse;
 import io.github.flashvayne.chatgpt.dto.image.ImageSize;
 import io.github.flashvayne.chatgpt.property.ChatgptProperties;
-import java.util.ArrayList;
-import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.sopt.gptapi.service.AsyncChatgptService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sopt.gptapi.service.AsyncChatgptService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -24,10 +18,12 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class AsyncChatgptServiceImpl implements AsyncChatgptService {
     private static final Logger log = LoggerFactory.getLogger(AsyncChatgptServiceImpl.class);
-    private final ChatgptProperties chatgptProperties;
+    protected final ChatgptProperties chatgptProperties;
     private final WebClient webClient;
 
     public AsyncChatgptServiceImpl(ChatgptProperties chatgptProperties) {
@@ -41,36 +37,38 @@ public class AsyncChatgptServiceImpl implements AsyncChatgptService {
 
     @Override
     public Mono<String> sendMessage(String message) {
-        ChatRequest chatRequest = new ChatRequest(
+        List<MultiChatMessage> messages = new ArrayList<>();
+        messages.add(new MultiChatMessage("user", message));
+
+        MultiChatRequest multiChatRequest = new MultiChatRequest(
             this.chatgptProperties.getModel(),
-            message,
+            messages,
             this.chatgptProperties.getMaxTokens(),
             this.chatgptProperties.getTemperature(),
             this.chatgptProperties.getTopP()
         );
-        log.info("Sending chat message : {}", message);
-        return sendChatRequest(chatRequest)
-            .map(chatResponse -> chatResponse.getChoices().get(0).getText());
+        return sendChatRequest(multiChatRequest)
+            .map(multiChatResponse -> multiChatResponse.getChoices().get(0).getMessage().getContent());
     }
 
     @Override
-    public Mono<ChatResponse> sendChatRequest(ChatRequest chatRequest) {
+    public Mono<MultiChatResponse> sendChatRequest(MultiChatRequest multiChatRequest) {
         return webClient.post()
             .uri(chatgptProperties.getUrl())
-            .body(BodyInserters.fromValue(chatRequest))
+            .body(BodyInserters.fromValue(multiChatRequest))
             .retrieve()
-            .bodyToMono(ChatResponse.class)
+            .bodyToMono(MultiChatResponse.class)
             .doOnError(e -> log.error("Error during chat request", e));
     }
 
     @Override
     public Mono<String> multiChat(List<MultiChatMessage> messages) {
         MultiChatRequest multiChatRequest = new MultiChatRequest(
-            this.chatgptProperties.getMulti().getModel(),
+            this.chatgptProperties.getModel(),
             messages,
-            this.chatgptProperties.getMulti().getMaxTokens(),
-            this.chatgptProperties.getMulti().getTemperature(),
-            this.chatgptProperties.getMulti().getTopP()
+            this.chatgptProperties.getMaxTokens(),
+            this.chatgptProperties.getTemperature(),
+            this.chatgptProperties.getTopP()
         );
         return multiChatRequest(multiChatRequest)
             .map(multiChatResponse -> multiChatResponse.getChoices().get(0).getMessage().getContent());
@@ -79,7 +77,7 @@ public class AsyncChatgptServiceImpl implements AsyncChatgptService {
     @Override
     public Mono<MultiChatResponse> multiChatRequest(MultiChatRequest multiChatRequest) {
         return webClient.post()
-            .uri(chatgptProperties.getMulti().getUrl())
+            .uri(chatgptProperties.getUrl())
             .body(BodyInserters.fromValue(multiChatRequest))
             .retrieve()
             .bodyToMono(MultiChatResponse.class)

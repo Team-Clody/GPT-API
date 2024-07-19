@@ -1,10 +1,11 @@
-package org.sopt.gptapi.service;
+package org.sopt.gptapi.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.sopt.gptapi.config.PromptProperty;
+import org.sopt.gptapi.service.AsyncChatgptService;
 import org.sopt.gptapi.service.reply.ReplyService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
