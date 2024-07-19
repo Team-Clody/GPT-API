@@ -29,10 +29,12 @@ public class RedisMessageListener implements MessageListener {
   public void onMessage(Message message, byte[] pattern) {
     String expiredKey = new String(message.getBody());
     log.info("########## listen succeed ##########");
-    Long diaryId = Long.parseLong(expiredKey.split(":")[1]);
+
+    long diaryId = Long.parseLong(expiredKey.split(":")[1]);
+    log.info("expiredKey : {}", diaryId);
 
     String lockKey = "lock:" + expiredKey;
-    if (redisLockService.tryLock(lockKey, 10, TimeUnit.SECONDS)) {
+    if (redisLockService.tryLock(lockKey, 30, TimeUnit.SECONDS)) {
       try {
         String nonExpiredKey = MESSAGE_KEY_PREFIX + diaryId;
         String value = redisTemplate.opsForValue().get(nonExpiredKey);
